@@ -6,5 +6,5 @@
 
 n = int(input('input n: '))
 def sequence(n):
-    return [((1 + 1 / n) ** n) for i in range (1, n + 1)]       
+    return [((1 + 1 / n) ** n) for n in range (1, n + 1)]       
 print(sum(sequence(n)))

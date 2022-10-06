@@ -17,7 +17,7 @@ for i in range(len(list)):
         max = list[i]
     if min > list[i]:
         min = list[i]
-difference = (max  - min)
+difference = (max - min)
 
 print(list)
 print(float(difference))

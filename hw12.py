@@ -9,7 +9,7 @@ number = int(input('Enter the size of the list: '))
 list = []
 for i in range(number):
     list.append(float(randint(0, 9)))
-
+    
 min = list[0]
 max = 0
 for i in range(len(list)):

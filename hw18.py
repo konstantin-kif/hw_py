@@ -6,12 +6,12 @@
 
 import os
 from random import randint
-from unittest import result
 
-k = int(input('Введите натуральная степень k: '))
+k = int(input('Enter the natural degree k: '))
 ratios = [randint(0, 100) for i in range(k + 1)]
 print(ratios)
 terms = []
+
 for ratio in ratios:
     if ratio:
         ratio = ratio if k == 0 else '' if ratio == 1 else ratio

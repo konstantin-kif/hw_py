@@ -6,66 +6,91 @@
 # a) Добавьте игру против бота
 # b) Подумайте как наделить бота ""интеллектом""
 
-import random
+# вариант человек против человека:
+from random import randint
 
-total_candy = 28
+def input_dat(name):
+    x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
+    while x < 1 or x > 28:
+        x = int(input(f"{name}, введите корректное количество конфет: "))
+    return x
 
-def human_turn(player, count):
-    while True:
-         candies_sum = int (input(f'\n Введите сколько конфет берет игрок: {player}: '))
-         if 1 <= candies_sum <= total_candy:
-            count -= candies_sum
-            print(f'Осталось {count} конфет: ')
-            return count
-        else:
-            print(f'\nБольше {total_candy} конфеты за ход брать нельзя!\n')
-            
-def computer_bot_turn(count, difficult):
-    candies_sum  = random.randint(1, total_candy)
-    if difficult:
-        candies_sum = count % (total_candy + 1) if  candies_sum == 0 else  candies_sum
-    print(f'\n Компьютер берет { candies_sum} кофет')
-    count -+  candies_sum
-    print(f'Осталось {count} конфет')
-    return count
 
-candies_count = 2021
-print(f'Добро пожаловать в игру  "{candies_count} конфета!"')
-opponent = int(input('Выберете соперника: "1" - Человек, "2" - Коьпьютер: \n'))
+def p_print(name, k, counter, value):
+    print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
 
-if opponent == 1:
-    player_1 = input('Введите имя игрока 1: ')
-    player_2 = input('Введите имя игрока 2: ')
-    print(f'Перед Вами {candies_count} конфета. За один ход можно забрать не больше чем {total_candy} конфеты')
-    current_player = random.choice([player_1, player_2])
-    print(f'\nПроведем жеребьевку!\nПервый ход делает игрок {current_player}\n ')
-
-    while True:
-        candies_count = human_turn(current_player, candies_count)
-        current_player = player_2 if current_player == player_1 else player_1
-        if 0 <= candies_count <= total_candy:
-            break
-    print(f'\nПобедил игрок {current_player}!\nПоздровляем!!! ')
-
-elif opponent == 2:
-    player_1 = input('Введите имя игрока 1: ')
-    player_2 = 'Компьютер'
-    print(f'Перед Вами {candies_count} конфета. За один ход можно забрать не больше чем {total_candy} конфеты')
-    current_player = random.choice([player_1, player_2])
-    print(f'\nПроведем жеребьевку!\nПервый ход делает игрок {current_player}\n ')
-
-    difficulty_level = int(input('Выберете уровень сложности игры: "1" - легкий, "2" - сложный: \n'))
-    difficulty_level = True if difficulty_level == 2 else False
-
-    while True:
-        if current_player == player_1:
-            candies_count = human_turn(current_player, candies_count)
-            current_player = player_2 if current_player == player_1 else player_1
-        else:
-             candies_count = computer_bot_turn(candies_count, difficulty_level)
-             current_player = player_2 if current_player == player_1 else player_1
-        if 0 <= candies_count <= total_candy:
-            break
-    print(f'\nПобедил игрок {current_player}!\nПоздровляем!!! ')
+player1 = input("Введите имя первого игрока: ")
+player2 = input("Введите имя второго игрока: ")
+value = int(input("Введите количество конфет на столе: "))
+flag = randint(0,2) # флаг очередности
+if flag:
+    print(f"Первый ходит {player1}")
 else:
-    print ('Некорректный ввод. Поробуй войти в игру еще раз!')
+    print(f"Первый ходит {player2}")
+
+counter1 = 0 
+counter2 = 0
+
+while value > 28:
+    if flag:
+        k = input_dat(player1)
+        counter1 += k
+        value -= k
+        flag = False
+        p_print(player1, k, counter1, value)
+    else:
+        k = input_dat(player2)
+        counter2 += k
+        value -= k
+        flag = True
+        p_print(player2, k, counter2, value)
+
+if flag:
+    print(f"Выиграл {player1}")
+else:
+    print(f"Выиграл {player2}")
+
+
+
+# вариант человек против бота:
+from random import randint
+
+def input_dat(name):
+    x = int(input(f"{name}, введите количество конфет, которое возьмете от 1 до 28: "))
+    while x < 1 or x > 28:
+        x = int(input(f"{name}, введите корректное количество конфет: "))
+    return x
+
+def p_print(name, k, counter, value):
+    print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
+
+player1 = input("Введите имя первого игрока: ")
+player2 = "Bot"
+value = int(input("Введите количество конфет на столе: "))
+flag = randint(0,2) # флаг очередности
+if flag:
+    print(f"Первый ходит {player1}")
+else:
+    print(f"Первый ходит {player2}")
+
+counter1 = 0 
+counter2 = 0
+
+while value > 28:
+    if flag:
+        k = input_dat(player1)
+        counter1 += k
+        value -= k
+        flag = False
+        p_print(player1, k, counter1, value)
+    else:
+        k = randint(1,29)
+        counter2 += k
+        value -= k
+        flag = True
+        p_print(player2, k, counter2, value)
+
+if flag:
+    print(f"Выиграл {player1}")
+else:
+    print(f"Выиграл {player2}")

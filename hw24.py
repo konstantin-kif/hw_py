@@ -36,7 +36,6 @@ def parse_exception(exp):
 if __name__ == '__main__':
     value = '3*(1+2)*(10-5)*3'
     value = ''.join(value.split())
-    #print(parse_exception(value))
     print(eval(value))
 
                
